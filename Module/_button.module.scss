@@ -1,0 +1,222 @@
+@import 'phrame';
+
+////
+/// This module will include basic browser reset styles
+/// @group Button
+/// @author Viktor Vincze
+////
+
+/// Generates different button styles
+/// @access public
+/// @param {String}		$suffix ['']	Suffix appended to the selector
+@mixin _button-generator($suffix: '') {
+
+	.#{_format-selector('button', false, false, true)} {
+
+		// Include sizes
+		&-size {
+			@each $key, $map in _button('size') {
+				$height: map-get($map, height);
+				$padding: map-get($map, padding);
+				$font-size: map-get($map, font-size);
+				$radius: map-get($map, border-radius);
+
+				&#{_format-selector($key, true, false)}#{$suffix} {
+					@include _rem-each((
+						font-size: $font-size,
+						padding: $padding,
+						line-height: $height,
+						height: $height,
+						border-radius: $radius
+					));
+				}
+			}
+
+			&-expanded#{$suffix} {
+				width: 100%;
+				margin-left: 0;
+				margin-right: 0;
+			}
+		}
+
+		// Include colors
+		&-color {
+			@each $key in map-keys(_button('color')) {
+				&#{_format-selector($key, true, false)}#{$suffix} {
+					@include _button-state-helper($key);
+				}
+			}
+		}
+
+		// Include radius
+		&-radius {
+			@each $radius in _button('radius') {
+				// Variable needed, the _format-selector first param can't accept quotes
+				$_radius: '#{$radius}';
+				&#{_format-selector($_radius, true, false)}#{$suffix} {
+					@include _rem(border-radius, $radius);
+				}
+			}
+
+			&-oval {
+				border-radius: 50%;
+			}
+
+			&-round {
+				border-radius: 200px;
+			}
+		}
+		
+		&-icon {
+
+			&,
+			&-left,
+			&-right{
+
+				> i {
+					position: absolute;
+					font-size: 1.5em;
+					top: 0.04em; // Nasty...
+				}
+
+				&:after{
+					content: "\00a0";
+				}
+			}
+
+			&-left {
+				padding-left: 2.5em;
+
+				> i {
+					left: 0.5em;
+				}
+			}
+
+			&-right {
+				padding-right: 2.5em;
+
+				> i {
+					right: 0.5em;
+				}
+			}
+
+			> i {
+				left: 0;
+				top: 0.04em;
+				width: 100%;
+				text-align: center;
+			}
+		}
+
+		&-group {
+			font-size: 0;
+
+			> .#{_format-selector('button', false, false, true)} {
+				margin-left: 0;
+				margin-right: 1px;
+
+				&:not(:first-child):not(:last-child){
+					border-radius: 0;
+				}
+
+				&:first-child {
+					border-top-right-radius: 0;
+					border-bottom-right-radius: 0;
+				}
+
+				&:last-child {
+					border-top-left-radius: 0;
+					border-bottom-left-radius: 0;
+					margin-right: 0;
+				}
+			}
+		}
+	}
+}
+
+/// Helps to add correct background rules
+/// @access private
+/// @param {String}	 $color				Button background color key
+/// @param {Boolean} $important [false]	Is the rule is an important rule?
+@mixin _button-color-helper($color, $important: false){
+	@if type-of($color) == list {
+		@include _vertical-gradient(nth($color, 1), nth($color, 2));
+	}
+	@else if $important {
+		background: $color !important;
+	}
+	@else {
+		background: $color;
+	}
+}
+
+/// Generates different state rules
+/// @access private
+/// @param {String | Bool} $key [false] Button color key
+@mixin _button-state-helper($key: false){
+
+	$color: null;
+	$_button-default-color-key: _button('default.color');
+
+	@if $key {
+		$color: _button('color.#{$key}');
+	}
+	@else {
+		$color: _button('color.#{$_button-default-color-key}');
+	}
+
+	@include _button-color-helper(map-get($color, 'main'));
+
+	color: map-get($color, 'text');
+	box-shadow: 0 1px 0 map-get($color, 'shadow');
+
+	&-state-hover,
+	&:hover {
+		@include _button-color-helper(map-get($color, 'hover'));
+	}
+
+	&-state-active,
+	&:active {
+		@include _button-color-helper(map-get($color, 'active'));
+	}
+
+	&-state-disabled,
+	&[disabled] {
+		@include _button-color-helper(map-get($color, 'disabled'), true);
+		@include _opacity(0.5);
+
+		cursor: not-allowed;
+	}
+}
+
+$isButtonModuleDefaultRendered: false !global;
+@if _module('button') and $isButtonModuleDefaultRendered == false {
+	$isButtonModuleDefaultRendered: true !global;
+
+	$_button-default-size-key: _button('default.size');
+
+	// Base button styles
+	.#{_format-selector('button', false, false, true)} {
+		@include _rem-each((
+			padding: _button('size.#{$_button-default-size-key}.padding'),
+			height: _button('size.#{$_button-default-size-key}.height'),
+			line-height: _button('size.#{$_button-default-size-key}.height'),
+			font-size: _button('size.#{$_button-default-size-key}.font-size'),
+			margin: _button('margin'),
+			border-radius: _dim('global-radius')
+		));
+		@include _button-state-helper;
+
+		display: inline-block;
+		position: relative;
+		top: 0;
+		border: 0;
+		cursor: pointer;
+		outline: none;
+		font-family: _typo('font-family.sans');
+		font-weight: 300;
+	}
+
+	// Include all other styles
+	@include _button-generator;
+}

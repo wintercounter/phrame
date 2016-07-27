@@ -1,0 +1,57 @@
+////
+/// Default form configuration options
+/// @group Grid
+/// @author Viktor Vincze
+////
+
+/// @prop {Map}				_grid.selector.row					[row]			Ex. result: &lt;ph-row&gt;
+/// @prop {String}			_grid.selector.column				[col]			Ex. result: &lt;ph-col&gt;
+/// @prop {String}			_grid.selector.indent-left			[indent-left]	Ex. result: &lt;ph-col ph-indent-left-10&gt;
+/// @prop {String}			_grid.selector.indent-right			[indent-right]	Ex. result: &lt;ph-col ph-indent-right-10&gt;
+/// @prop {String}			_grid.selector.gutter				[gutter]		Ex. result: &lt;ph-col ph-gutter-left&gt;
+/// @prop {String}			_grid.selector.clear				[clear]			Ex. result: &lt;ph-clear&gt;
+/// @prop {String}			_grid.selector.center				[center]		Ex. result: &lt;ph-col ph-center&gt;
+/// @prop {String}			_grid.selector.all					[all]			Ex. result: &lt;ph-col ph-gutter-all&gt;
+/// @prop {String}			_grid.selector.equal				[equal]			Ex. result: &lt;ph-col-5-equal&gt;
+///
+/// @prop {Map}				_grid.gutter						[See source]	Gutter feature configuration
+/// @prop {Bool}			_grid.gutter.enabled				[true]			Generate gutters rules?
+/// @prop {Bool}			_grid.gutter.stepped-enabled		[true]			Enabled stepped gutter classes?
+/// @prop {Number}			_grid.gutter.max					[50]			Maximum gutter (Ensure dividing MAX/STEP will have 0 division!!!)
+/// @prop {Number}			_grid.gutter.step					[10]			With 10, you'll have class names for 0, 10, 20, 30, 40, 50 (Ensure dividing MAX/STEP will have 0 division!!!)
+///
+/// @prop {List}			_grid.equal-columns					[5 10]			Equal column widths but not fit into the grid size.
+/// @prop {Number}			_grid.column-count					[48]			Total column count ina  row (grid size). Ideal: 12, 16, 24, 48 (48 generates a bigger code base, but allows more precision. Recommended to control panel designs for example.)
+$_grid-config: (
+	selector: (
+		row: 'row',
+		column: 'col',
+		indent-left: 'indent-left',
+		indent-right: 'indent-right',
+		gutter: 'gutter',
+		clear: 'clear',
+		center: center,
+		all: all,
+		equal: equal
+	),
+	gutter: (
+		enabled: true,
+		stepped-enabled: true,
+		max: 50,
+		step: 5
+	),
+	equal-columns: (5 8),
+	column-count: 60
+);
+
+$_: _config('_grid', $_grid-config);
+
+/// Helper to get/set config values easier.
+/// @access public
+/// @param {String}	$key				Config key
+/// @param {Mixed}	$value	[false]		Config value
+/// @return {Mixed}
+@function _grid ($key, $value: $_setter-placeholder) {
+	$key: '_grid.' + $key;
+	@return _config($key, $value);
+}

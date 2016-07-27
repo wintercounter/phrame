@@ -1,0 +1,19 @@
+$_: _config('_path', (
+	common: 		'../../common/images/',
+	images-mc:		'../images/',
+	images-reg:		'../../registration/images/',
+	landing-page:	'../../registration/images/landing/',
+	logo: 			'../../common/images/logo/'
+));
+
+/// Helper to get/set config values easier.
+/// Please node that _path doesn't have a setter.
+/// Use _config to set new keys in path.
+/// @access public
+/// @param {String}	$key				Config key
+/// @param {String}	$filename	['']	The filename to merge into the path
+/// @return {Mixed}
+@function _path ($key, $filename: '') {
+    $key: '_path.' + $key;
+    @return _config($key) + $filename;
+}

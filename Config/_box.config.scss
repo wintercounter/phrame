@@ -1,0 +1,51 @@
+////
+/// Default box module configuration options
+/// @group Box
+/// @author Viktor Vincze
+////
+
+/// @prop {Map}		_box.default				[See source]	Default values in a map
+/// @prop {String}	_box.default.size 		[normal]		Default size
+/// @prop {String}	_box.default.color 		[yellow]		Default color
+/// @prop {String}	_box.default.font-weight	[300]			Default font-weight
+///
+/// @prop {List}	_box.radius 				[0 3 5 7 9 10]	All radius which should be generated
+/// @prop {List}	_box.margin 				[0 5 10 0]		Button margins (TRBL)
+/// @prop {Map}		_box.size 				[See source]	The sizes and names you want to use
+/// @prop {Map}		_box.color 				[See source]	Available colors
+$_box-config: (
+	selector: (
+		box: 'box',
+	),
+	messages: (
+		enabled: true,
+		types: (
+			default: (
+				font-size: 16,
+				padding: 10
+			),
+			alert: (
+
+			),
+			info: (
+
+			),
+			success: (
+
+			)
+		)
+	)
+);
+
+// Merge
+$_: _config('_box', $_box-config);
+
+/// Helper to get/set config values easier.
+/// @access public
+/// @param {String}	$key				Config key
+/// @param {Mixed}	$value	[false]		Config value
+/// @return {Mixed}
+@function _box ($key, $value: $_setter-placeholder) {
+	$key: '_box.' + $key;
+	@return _config($key, $value);
+}

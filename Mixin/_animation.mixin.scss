@@ -1,0 +1,47 @@
+////
+/// CSS3 animation related mixins.
+/// @group CSS3
+/// @author Viktor Vincze
+////
+
+/// CSS3 animation with browser prefixes
+/// @access public
+/// @param {String | ArgList}		$animate	Animation properties. For multiple rules, use comma (multiple parameters).
+/// @content
+@mixin _animation($animate...) {
+	$max: length($animate);
+	$animations: '';
+
+	@for $i from 1 through $max {
+		$animations: #{$animations + nth($animate, $i)};
+
+		@if $i < $max {
+			$animations: #{$animations + ", "};
+		}
+	}
+
+	-webkit-animation:	$animations;
+	-moz-animation:		$animations;
+	-ms-animation:		$animations;
+	-o-animation:		$animations;
+	animation:			$animations;
+}
+
+/// CSS3 animation keyframes with browser prefixes. SASS compiler should automatically add to at-root.
+/// @access public
+/// @param {String}		$animation-name		Name of the animation
+/// @content
+@mixin _keyframes($animation-name) {
+    @-webkit-keyframes #{$animation-name} {
+        @content;
+    }
+    @-moz-keyframes #{$animation-name} {
+        @content;
+    }
+    @-o-keyframes #{$animation-name} {
+        @content;
+    }
+    @keyframes #{$animation-name} {
+        @content;
+    }
+}

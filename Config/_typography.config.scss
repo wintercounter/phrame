@@ -1,0 +1,65 @@
+////
+/// Default typography related configuration options
+/// @group Typo
+/// @author Viktor Vincze
+////
+
+/// @prop {Map}			_typography.font-size					[See source]		Default font sizes
+/// @prop {Number}		_typography.font-size.root				[62.5%]				Root font size on the HTML element. Phrame uses rem, final sizes will be calculated from this value by rem.
+/// @prop {Number}		_typography.font-size.base				[14]				Base (global) font size (in px)
+/// @prop {Number}		_typography.font-size.h1				[42]				H1 size
+/// @prop {Number}		_typography.font-size.h2				[36]				H2 size
+/// @prop {Number}		_typography.font-size.h3				[30]				H3 size
+/// @prop {Number}		_typography.font-size.h4				[24]				H4 size
+/// @prop {Number}		_typography.font-size.h5				[18]				H5 size
+/// @prop {Number}		_typography.font-size.h6				[14]				H6 size
+/// @prop {Number}		_typography.font-size.header-small-text	[0.5em]				Small tag font size in headers (relative to the parent size)
+/// @prop {Number}		_typography.font-size.datalist-title	[20]				Font size of datalist's title
+/// @prop {Number}		_typography.font-size.datalist-data		[14]				Font size of datalist's data
+///
+/// @prop {Map}			_typography.line-height					[See source]		Line heights
+/// @prop {Number}		_typography.line-height.root			[150%]				Root line height on the HTML element
+///
+/// @prop {Number}		_typography.margin-bottom				[20]				Margin bottom from headers
+///
+/// @prop {Map}			_typography.font-family					[See source]		Default font families
+/// @prop {String}		_typography.font-family.sans			["Roboto", Arial, sans-serif]
+/// @prop {String}		_typography.font-family.serif			["Roboto Slab", "Times New Roman", serif]
+/// @prop {String}		_typography.font-family.secondary		["Roboto Condensed", Arial, sans-serif]
+$_typo-config: (
+	font-size: (
+		root: 62.5%,
+		base: 14,
+		h1: 42,
+		h2: 36,
+		h3: 30,
+		h4: 24,
+		h5: 18,
+		h6: 14,
+		header-small-text: 0.5em,
+		datalist-title: 22,
+		datalist-data: 16
+	),
+	line-height: (
+		root: 150%
+	),
+	margin-bottom: 20,
+	font-family: (
+		sans: unquote('"Roboto", Arial, sans-serif'),
+		serif: unquote('"Roboto Slab", "Times New Roman", serif'),
+		secondary: unquote('"Roboto Condensed", Arial, sans-serif')
+	)
+);
+
+// Merge
+$_: _config('_typography', $_typo-config);
+
+/// Helper to get/set config values easier.
+/// @access public
+/// @param {String}	$key				Config key
+/// @param {Mixed}	$value	[false]		Config value
+/// @return {Mixed}
+@function _typo ($key, $value: $_setter-placeholder) {
+	$key: '_typography.' + $key;
+	@return _config($key, $value);
+}

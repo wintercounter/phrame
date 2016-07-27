@@ -1,0 +1,30 @@
+@import 'phrame';
+
+/// Must have framework rules
+/// @group Must
+/// @author Viktor Vincze
+
+html {
+	font-size: _typo('font-size.root');
+	-webkit-text-size-adjust: 100%;
+}
+
+body {
+	font-family: _typo('font-family.sans');
+	font-weight: normal;
+	font-style: normal;
+	line-height: _typo('line-height.root');
+
+	@if _system('custom-scrollbar.enabled') {
+		@include _scrollbar;
+	}
+
+	&:before {
+ 		display: none;
+		content: "#{json-encode(_config('_screen'))}";
+	}
+}
+
+*, *:after, *:before {
+	@include _box-sizing;
+}

@@ -1,0 +1,43 @@
+////
+/// Default system configuration options
+/// @group System
+/// @author Viktor Vincze
+////
+
+/// @prop {String}			_system.prefix				[ph]			Prefix to be used by core module selectors
+/// @prop {String}			_system.selector-style		[dash-ed]		Style of selectors should be generated. Options: dash-ed, CamelCase, under_score
+/// @prop {Bool}			_system.tag-mode			[true]			Use custom tag instead of selector
+/// @prop {String}			_system.custom-scrollbar	[See source]	Style of custom scrollbars
+$_system-config: (
+	prefix: 'ph',
+	selector-style: 'dash-ed',
+	tag-mode: true,
+	custom-scrollbar: (
+		enabled: false,
+		width: 7px,
+		height: 7px,
+		button: (
+			display: none,
+			background: 'black.main'
+		),
+		track-background: 'dark-red.darker',
+		thumb: (
+			background: 'red.main',
+			radius: 10px
+		),
+		arrow-color: 'yellow.main'
+	)
+);
+
+// Merge
+$_: _config('_system', $_system-config);
+
+/// Helper to get/set config values easier.
+/// @access public
+/// @param {String}	$key				Config key
+/// @param {Mixed}	$value	[false]		Config value
+/// @return {Mixed}
+@function _system ($key, $value: $_setter-placeholder) {
+	$key: '_system.' + $key;
+	@return _config($key, $value);
+}

@@ -1,0 +1,95 @@
+////
+/// Misc mixins but still very useful :)
+/// @group Screen
+////
+
+/// Creates a media query from the provided screen value and/or orientation.
+/// @access public
+/// @param {String}		$screen						Name of the screen. Use false to only apply to orientation.
+/// @param {String}		$up-down		[false]		up or down
+/// @param {String}		$orientation	[false]		Orientation. Orientation condition won't be added if false.
+@mixin _on-screen($screen, $up-down: false, $orientation: false){
+
+	// Orientation isn't considered by retina mixins
+	@if $screen == retina or $screen == hdpi {
+		@media only screen and (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {@content;}
+		@media only screen and (-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 124.8dpi) {@content;}
+		@media only screen and (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {@content;}
+		@media only screen and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {@content;}
+	}
+	@else {
+		$width-type: max-width;
+		$to: 0;
+		$from: 0;
+
+		@if type-of($screen) == number or type-of($up-down) == number {
+			$from: $screen;
+			$to: $up-down;
+			$up-down: false;
+
+			@if $from != false and $to != false {
+				$screen: false;
+			}
+			@elseif $from != false and $to == false {
+				$screen: true;
+				$up-down: up;
+			}
+			@else {
+				$screen: true;
+				$up-down: down;
+			}
+		}
+		@elseif $screen {
+			$screen: _screen('size' + '.' + $screen);
+			$from: map-get($screen, from);
+			$to: map-get($screen, to);
+		}
+
+		@if $up-down == 'up' {
+			$width-type: min-width;
+			$to: $from;
+		}
+
+		@if $screen and $up-down == false and $orientation {
+			@media only screen and (min-width: #{$from}px) and (max-width: #{$to}px) and (orientation: #{$orientation}) {
+				@content;
+			}
+		}
+		@elseif $screen and $up-down and $orientation {
+			@media only screen and (#{$width-type}: #{$to}px) and (orientation: #{$orientation}) {
+				@content;
+			}
+		}
+		@elseif $screen and $up-down and $orientation == false {
+			@media only screen and (#{$width-type}: #{$to}px) {
+				@content;
+			}
+		}
+		@elseif $screen == false and $up-down == false and $orientation != false {
+			@media only screen and (orientation: #{$orientation}) {
+				@content;
+			}
+		}
+		@else {
+			@media only screen and (min-width: #{$from}px) and (max-width: #{$to}px) {
+				@content;
+			}
+		}
+	}
+}
+
+@mixin _fullscreen() {
+	&:-webkit-full-screen {
+		@content;
+	}
+	&:-moz-full-screen {
+		@content;
+	}
+	&:-ms-fullscreen {
+		@content;
+	}
+	&:fullscreen {
+		@content;
+	}
+}
+

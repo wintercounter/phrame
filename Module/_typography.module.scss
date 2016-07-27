@@ -1,0 +1,164 @@
+@import 'phrame';
+
+//////
+///// Includes global typography styles
+///// @group Typo
+///// @author Viktor Vincze
+//////
+//
+@if _module('typography') {
+
+	$header-tags: ('.h1' '.h2' '.h3' '.h4' '.h5' '.h6');
+	$global-gutter: _dim(global-gutter);
+
+	@each $tag in $header-tags {
+		#{$tag} {
+			@include _rem(font-size, _typo('font-size' + $tag));
+			@include _rem(line-height, _typo('font-size' + $tag));
+		}
+	}
+
+	#{_str-implode($header-tags, ', ')}{
+		font-family: _typo('font-family.sans');
+		display: block;
+		@include _rem(margin-bottom, _typo('margin-bottom'));
+
+		small {
+			font-size: _typo('font-size.header-small-text');
+			color: _color('text.secondary');
+		}
+	}
+
+	.#{_format-selector(p, false, false, true)} {
+		@include _rem(font-size, _typo('font-size.base'));
+		@include _rem(margin-bottom, $global-gutter);
+		line-height: 1.5;
+
+		&--secondary {
+			color: _color('text.secondary');
+		}
+	}
+
+//	a {
+//		color: _color('text.link');
+//		text-decoration: none;
+//
+//		&:hover {
+//			color: lighten(_color('text.link'), 20%);
+//		}
+//	}
+//
+
+	.#{_format-selector(font-style-sans, false, false, true)} {
+		font-family: _typo('font-family.sans');
+	}
+
+	.#{_format-selector(font-style-serif, false, false, true)} {
+		font-family: _typo('font-family.serif');
+	}
+
+	body {
+		color: _color('text.base');
+	}
+
+	.#{_format-selector(hr, false, false, true)} {
+		display: block;
+		width: 100%;
+		float: left;
+		clear: both;
+		height: 2px;
+		border: 0;
+		border-bottom: 1px solid lighten(_color('hr-background'), 25%);
+		background: _color('hr-background');
+		margin: 0;
+
+		@include _rem(margin-bottom, $global-gutter);
+
+		&--top {
+			@include _rem(margin-top, $global-gutter);
+			margin-bottom: 0;
+		}
+
+		&--both {
+			@include _rem(margin-top, $global-gutter);
+		}
+
+		&--full-width {
+			margin-left: _rem($global-gutter * -1);
+			margin-right: _rem($global-gutter * -1);
+			float: none;
+			width: auto;
+		}
+	}
+
+	::selection {
+		background: darken(_color(primary), 10%);
+		color: _color('text.base');
+	}
+	::-moz-selection {
+		background: darken(_color(primary), 10%);
+		color: _color('text.base');
+	}
+
+//	em {
+//		font-style: italic;
+//	}
+//
+//	dl {
+//		dt {
+//			@include _rem(font-size, _typo('font-size.datalist-title'));
+//			@include _rem(margin-bottom, 10);
+//			font-weight: bold;
+//		}
+//
+//		dd {
+//			@include _rem(font-size, _typo('font-size.datalist-data'));
+//			@include _rem(margin-bottom, _dim('global-gutter'));
+//			line-height: _typo('line-height.root');
+//		}
+//	}
+//
+//	ul, ol {
+//		line-height: 150%;
+//
+//		@include _rem-each((
+//			font-size: _typo('font-size.base'),
+//			margin-bottom: _dim('global-gutter')
+//		));
+//
+//		&.#{_format-selector('list', false, false, true)} {
+//
+//			&#{_format-selector('disc', true)} {
+//				list-style-type: disc;
+//			}
+//
+//			&#{_format-selector('square', true)} {
+//				list-style-type: square;
+//			}
+//
+//			&#{_format-selector('circle', true)} {
+//				list-style-type: circle;
+//			}
+//
+//			&#{_format-selector('lower-roman', true)} {
+//				list-style-type: lower-roman;
+//			}
+//
+//			&#{_format-selector('upper-roman', true)} {
+//				list-style-type: upper-roman;
+//			}
+//
+//			&#{_format-selector('spaced', true)} > li {
+//				margin-bottom: 1em;
+//			}
+//		}
+//
+//		&[class^=#{_format-selector('list', false, false, true)}] {
+//			padding-left: 1em;
+//		}
+//	}
+//
+//	ol {
+//		list-style-type: decimal;
+//	}
+}

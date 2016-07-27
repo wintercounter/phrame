@@ -1,0 +1,10 @@
+// Init some basic variables
+$_empty-map: map-merge((), ()); // This will also have type map, instead og list
+$_config: $_empty-map;
+$_setter-placeholder: 'it-is-a-getter';
+$_config-key-cache: $_empty-map;
+
+@import 'Function/all';
+@import 'Mixin/all';
+@import 'Library/all';
+@import 'Config/all';

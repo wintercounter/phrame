@@ -1,0 +1,72 @@
+////
+/// Utilities
+/// @group Util
+/// @author Viktor Vincze
+////
+
+/// Converts a px based to a "rem-ified" value with the specified property.
+/// @access public
+/// @param {String}		$property	Property.
+/// @param {String}		$value		Pixel based value.
+@mixin _rem($property, $value){
+
+	$result-px: '';
+	$result-rem: '';
+	$suffix-px: '';
+	$suffix-rem: '';
+
+	@each $val in $value {
+
+		// Strip units
+		$val: $val / ($val * 0 + 1);
+
+		@if type-of($val) == number {
+			$suffix-px: px;
+			$suffix-rem: rem;
+		}
+		@else {
+			$suffix-px: '';
+			$suffix-rem: '';
+		}
+
+		@if _dim('rem-fallback') {
+			$result-px: $result-px + ' ' + $val + $suffix-px;
+		}
+
+		$result-rem: $result-rem + ' ' + $val / 10 + $suffix-rem;
+	}
+
+	@if _dim(rem-fallback) {
+		#{$property}: unquote($result-px);
+	}
+
+	#{$property}: unquote($result-rem);
+}
+
+/// Accepts a map as arguments and iterates through each item to apply the _rem mixin.
+/// @access public
+/// @param {Map}	$map	A map holding the properties and their values.
+/// @example scss A map passed to the mixin.
+///   @include _rem-each((
+///     width: 300,
+///     height: 400
+///   ));
+@mixin _rem-each($map){
+	@each $prop, $val in $map {
+		@include _rem($prop, $val);
+	}
+}
+
+/// Appends table display to the element and table-cell to it's child with vertical align.
+/// @access public
+/// @example scss Simply include the mixin.
+///   @include _tableize;
+@mixin _tableize {
+	display: table;
+
+	> * {
+		display: table-cell;
+		vertical-align: middle;
+		float: none;
+	}
+}

@@ -1,0 +1,13 @@
+////
+/// @group Grid
+/// @author Viktor Vincze
+////
+
+/// Formats grid selector
+/// @access private
+/// @param {ArgList}	$args	Selectors to be imploded
+/// @return {String}
+@function _format-grid-selector($args...){
+	$string: _format-selector(_str-implode($args), false, false, true);
+	@return $string;
+}

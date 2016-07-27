@@ -1,0 +1,230 @@
+////
+/// CSS3 features with browser prefixes.
+/// @group CSS3
+/// @author Viktor Vincze
+////
+
+/// CSS3 box-sizing with browser prefixes.
+/// @access public
+/// @param {String}		$val	[border-box] Value of the property.
+@mixin _box-sizing($val: border-box) {
+	-webkit-box-sizing: $val;
+	-moz-box-sizing: $val;
+	box-sizing: $val;
+}
+
+/// CSS3 transition with browser prefixes.
+/// @access public
+/// @param {String}		$prop		[all]		Property to animate.
+/// @param {String}		$duration	[0.2s]		Duration of the animation.
+/// @param {String}		$easing		[ease-out]	Animation timing.
+/// @param {Number}		$delay		[0]		Delay of the animation.
+@mixin _transition ($prop: all, $duration: 0.2s, $easing: ease-out, $delay: 0s) {
+	-moz-transition: $prop $duration $easing $delay;
+	-webkit-transition: $prop $duration $easing $delay;
+	-ms-transition: $prop $duration $easing $delay;
+	-o-transition: $prop $duration $easing $delay;
+	transition: $prop $duration $easing $delay;
+}
+
+/// CSS3 transform with browser prefixes.
+/// @access public
+/// @param {String}		$val	Value of the property.
+@mixin _transform ($val) {
+	-moz-transform: $val;
+	-webkit-transform: $val;
+	-ms-transform: $val;
+	-o-transform: $val;
+	transform: $val;
+}
+
+/// CSS3 translate with browser prefixes. If Z is provided, it'll use translate3d instead.
+/// @access public
+/// @param {Number}			$x	[0]		X position.
+/// @param {Number}			$y	[0]		Y Position
+/// @param {Number | Bool}	$z	[false]	Z Position
+@mixin _translate ($x:0, $y:0, $z:false) {
+	@if $z == false {
+		@include _transform(translate($x, $y));
+	}
+	@else {
+		@include _transform(translate3d($x, $y, $z));
+	}
+}
+
+/// CSS3 transform-style with browser prefixes.
+/// @access public
+/// @param {String}		$transform	Value of the property.
+@mixin _transform-style ($transform) {
+	-webkit-transform-style: $transform;
+	-moz-transform-style: $transform;
+	-ms-transform-style: $transform;
+	transform-style: $transform;
+}
+
+/// CSS3 perspective with browser prefixes.
+/// @access public
+/// @param {String}		$perspective	Value of the property.
+@mixin _perspective ($perspective) {
+	-webkit-perspective: $perspective;
+	-moz-perspective: $perspective;
+	-ms-perspective: $perspective;
+	perspective: $perspective;
+}
+
+/// CSS3 backface-visibility with browser prefixes.
+/// @access public
+/// @param {String}		$visibility		Value of the property.
+@mixin _backface-visibility ($visibility) {
+	-webkit-backface-visibility: $visibility;
+	-moz-backface-visibility: $visibility;
+	-ms-backface-visibility: $visibility;
+	backface-visibility: $visibility;
+}
+
+/// Opacity with browser IE8 Fallback.
+/// @access public
+/// @param {Number}		$opacity		Value of the property.
+@mixin _opacity($opacity) {
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=#{$opacity * 100})";
+	opacity: $opacity;
+}
+
+/// Placeholder styling with browser prefixes.
+/// @access public
+/// @content
+@mixin _placeholder {
+	&::-webkit-input-placeholder {@content}
+	&:-moz-placeholder {@content}
+	&::-moz-placeholder {@content}
+	&:-ms-input-placeholder {@content}
+	&:placeholder {@content}
+}
+
+/// CSS3 horizontal gradient with browser prefixes. If end-color isn't provided, the mixin will assume it is a key and tries to get the gradient from the color library.
+/// @access public
+/// @param {String}			$start-color			Gradient key or start color.
+/// @param {String | Bool}	$end-color		[false] End color.
+@mixin _horizontal-gradient($start-color, $end-color: false) {
+	$start-color-IE: null;
+	$end-color-IE: null;
+
+	@if $end-color == false {
+		$colors: _config('_color-library.gradient.' + $start-color);
+		$start-color: nth($colors, 1);
+		$end-color: nth($colors, 2);
+
+		@if $start-color == true {
+			$start-color: nth($colors, 2);
+			$end-color: nth($colors, 1);
+		}
+
+		$start-color-IE: ie-hex-str($start-color);
+		$end-color-IE:  ie-hex-str($end-color);
+	}
+	@else{
+		$start-color-IE: ie-hex-str($start-color);
+		$end-color-IE: ie-hex-str($end-color);
+	}
+
+	background: $start-color;
+	background: -moz-linear-gradient(left,  $start-color 0%, $end-color 100%);
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,$start-color), color-stop(100%,$end-color));
+	background: -webkit-linear-gradient(left,  $start-color 0%,$end-color 100%);
+	background: -o-linear-gradient(left,  $start-color 0%,$end-color 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#{$start-color-IE}', endColorstr='#{$end-color-IE}',GradientType=1 );
+	background: -ms-linear-gradient(left,  $start-color 0%,$end-color 100%);
+	background: linear-gradient(to right,  $start-color 0%,$end-color 100%);
+
+}
+
+/// CSS3 vertical gradient with browser prefixes. If end-color isn't provided, the mixin will assume it is a key and tries to get the gradient from the color library.
+/// @access public
+/// @param {String}			$start-color			Gradient key or start color.
+/// @param {String | Bool}	$end-color		[false] End color.
+@mixin _vertical-gradient($start-color: false, $end-color: false, $start-from: 0%) {
+	$start-color-IE: null;
+	$end-color-IE: null;
+
+	@if $end-color == false {
+		$colors: _config('_color-library.gradient.' + $start-color);
+		$start-color: nth($colors, 1);
+		$end-color: nth($colors, 2);
+
+		@if $start-color == true {
+			$start-color: nth($colors, 2);
+			$end-color: nth($colors, 1);
+		}
+
+		$start-color-IE: ie-hex-str($start-color);
+		$end-color-IE:  ie-hex-str($end-color);
+	}
+	@else {
+		$start-color-IE: ie-hex-str($start-color);
+		$end-color-IE: ie-hex-str($end-color);
+	}
+
+	background: $start-color;
+	background: -moz-linear-gradient(top,  $start-color $start-from, $end-color 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop($start-from,$start-color), color-stop(100%,$end-color));
+	background: -webkit-linear-gradient(top,  $start-color $start-from,$end-color 100%);
+	background: -o-linear-gradient(top,  $start-color $start-from,$end-color 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start-color-IE}', endColorstr='#{$end-color-IE}', GradientType=0);
+	background: -ms-linear-gradient(top,  $start-color $start-from,$end-color 100%);
+	background: linear-gradient(to bottom,  $start-color $start-from,$end-color 100%);
+}
+
+/// Custom scrollbar styles in IE10+ and Chrome. All other browsers use native.
+/// Configured from system config, the mixin just applies the style.
+/// @access public
+@mixin _scrollbar ($map: _system('custom-scrollbar')){
+	$button: map-get($map, 'button');
+	$thumb: map-get($map, 'thumb');
+
+	& {
+		// IE
+		scrollbar-base-color: _config('_color-library.' + map-get($thumb, 'background'));
+		scrollbar-track-color: _config('_color-library.' + map-get($map, 'track-background'));
+		scrollbar-arrow-color: _config('_color-library.' + map-get($map, 'arrow-color'));
+		scrollbar-shadow-color: rgba(0,0,0,0);
+	}
+
+	// Chrome
+	&::-webkit-scrollbar {
+		width: map-get($map, 'width');
+		height: map-get($map, 'height');
+	}
+
+	&::-webkit-scrollbar-button {
+		background-color: _config('_color-library.' + map-get($button, 'background'));
+		display: map-get($button, 'display');
+	}
+
+	&::-webkit-scrollbar-track-piece {
+		background-color: _config('_color-library.' + map-get($map, 'track-background'));
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: _config('_color-library.' + map-get($thumb, 'background'));
+		border-radius: map-get($thumb, 'radius');
+	}
+
+	&::-webkit-scrollbar-corner {
+		display: none;
+	}
+
+	&::-webkit-resizer {
+		background-color: rgba(255,255,255, 0.5);
+	}
+}
+
+/// Disables selection for certain elements.
+/// @access public
+@mixin _no-selection {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}

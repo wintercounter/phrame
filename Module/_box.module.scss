@@ -1,0 +1,83 @@
+@import 'phrame';
+
+@if _module('box') {
+
+	$_box-main-selector: '.' +_format-selector(_box('selector.box'), false, false, true);
+	$radius: _rem(_dim('global-radius'));
+	$gutter: _rem(_dim('global-gutter'));
+
+	#{$_box-main-selector} {
+
+		$selector: &;
+
+		&__header {
+			@include _tableize;
+
+			table-layout: fixed;
+			height: 5rem;
+			font-size: 1.6rem;
+			font-weight: bold;
+			background-color: _color('box.header-background');
+			color: _color('box.header-text');
+
+			// Should be a col inside the header
+			> * {
+				padding: 0 $gutter;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				overflow: hidden;
+			}
+		}
+
+		&__content {
+			padding: $gutter;
+			background-color: _color('box.content-background');
+		}
+
+		&--radius {
+			> *:first-child {
+				border-radius: $radius $radius 0 0;
+			}
+			> *:last-child {
+				border-radius: 0 0 $radius $radius;
+			}
+		}
+
+		&--inline {
+			width: 100%;
+			display: table;
+
+			> * {
+				display: table-cell;
+				vertical-align: middle;
+			}
+		}
+
+		&--secondary {
+			background-color: _color('box.secondary.bg');
+			color: _color('box.secondary.text');
+
+			#{$selector}__content {
+				background-color: transparent;
+				font-size: 1.4rem;
+			}
+
+			strong {
+				color: _color('text.base');
+				font-weight: normal;
+			}
+		}
+
+		// Not used anymore, leaving here as placeholder.
+		//&__figure {
+			//width: 7.5rem;
+			//color: #202020;
+			//text-align: center;
+			//font-size: 2rem;
+
+			//&--info {
+				//background-color: #55ACEE;
+			//}
+		//}
+	}
+}

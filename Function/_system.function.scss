@@ -1,0 +1,190 @@
+////
+/// @group System
+/// @author Viktor Vincze
+////
+
+/// Config value getter (use _config)
+/// @access private
+/// @param {String}	$original	Config key to get the value for.
+/// @return {Mixed}
+$ikra: 0 !global;
+@function _config-get($original) {
+
+	@if map-has-key($_config-key-cache, $original) {
+		@return map-get($_config-key-cache, $original);
+	}
+
+	$keys: _str-explode($original, '.');
+	$result: $_config;
+
+	@each $key in $keys {
+		$key: $key + '';
+		@if map-has-key($result, $key) {
+			$result: map-get($result, $key);
+		} @else {
+			$ikra: $ikra+1 !global;
+			@warn $ikra 'No such config key: ' + $original;
+			@return $original;
+		}
+	}
+
+	$_config-key-cache: map-merge($_config-key-cache, (
+		$original: $result
+	)) !global;
+
+	@return $result;
+}
+
+/// Config value setter (use _config)
+/// @access private
+/// @param {String}	$original	Config key to set the value for.
+/// @param {Mixed}	$value		Value of the key.
+/// @return {Null}
+@function _config-set($original, $value) {
+	// Clear cache
+	$_config-key-cache: $_empty-map;
+
+	$keys: _str-explode($original, '.');
+	$keysNum: length($keys);
+	$pieces: ();
+	$tempConfig: $_config;
+	$result: null;
+	$nextPiece: null;
+
+	@each $key in $keys {
+
+		// No such key yet? Then create it
+		@if map-has-key($tempConfig, $key) == false {
+			@if type-of($tempConfig) != map {
+				$tempConfig: $_empty-map;
+			}
+			$tempConfig: map-merge($tempConfig, (
+				$key: $_empty-map
+			));
+			$tempConfig: map-get($tempConfig, $key);
+		} @else {
+			$v: map-get($tempConfig, $key);
+			@if type-of($v) != map {
+				$v: $_empty-map;
+			}
+			$tempConfig: $v;
+		}
+
+		// Store pieces
+		$pieces: append($pieces, $tempConfig);
+	}
+
+	// Prepend original config object
+	$pieces: join($_config, $pieces);
+
+	// Merge old and new values if both are a map
+	$old-value: nth($pieces, length($pieces));
+	@if type-of($old-value) == map and type-of($value) == map {
+		$value: map-merge($old-value, $value);
+	}
+
+	$i: $keysNum;
+	@while $i > 0 {
+		$key: nth($keys, $i);
+		$piece: nth($pieces, $i);
+
+		@if $i == $keysNum {
+			$nextPiece: map-merge($piece, ($key: $value));
+		} @else {
+			$nextPiece: map-merge($piece, ($key: $nextPiece));
+		}
+
+		$result: $nextPiece;
+		$i: $i - 1;
+	}
+
+	$_config: $result !global;
+
+	@return null;
+
+}
+
+/// Config value getter/setter
+/// @access public
+/// @param {String}	$original				Config key to set the value for.
+/// @param {Mixed}	$value		[false]		Value of the key.
+/// @return {string}
+@function _config($key, $value: $_setter-placeholder) {
+	@if $value == $_setter-placeholder {
+		@return _config-get($key);
+	} @else {
+		@return _config-set($key, $value);
+	}
+}
+
+/// Gets the glue for selectors based on the configured selector style.
+/// @access public
+/// @return {String}
+@function _get-global-glue() {
+	$style: _system(selector-style);
+	@if $style == dash-ed {
+		@return '-';
+	} @else if $style == camelCase {
+		@return '';
+	} @else if $style == under_score {
+		@return '_';
+	}
+}
+
+/// Formats a string as a selector according to the selector style setting.
+/// @access public
+/// @param {String}			$string						The selector.
+/// @param {String | Bool}	$glue-start		[false]		Append glue to the beginning?
+/// @param {String | Bool}	$glue-end		[false]		Append glue to the ending?
+/// @param {Bool}			$global-prefix	[false]		Append global prefix to the beginning?
+/// @return {String}
+@function _format-selector($string, $glue-start: false, $glue-end: false, $global-prefix: false) {
+
+	$style: _system('selector-style');
+	$keys: _str-explode($string, '-');
+	$glue: _get-global-glue();
+	$result: '';
+
+	@if $global-prefix {
+		$keys: join(_system('prefix'), $keys);
+	}
+
+	@if $style == camelCase {
+		$temp: ();
+		@each $key in $keys {
+			$temp: append($temp, _str-ucfirst($key));
+		}
+		$keys: $temp;
+	}
+
+	$i: 0;
+	@each $key in $keys {
+		@if type-of($key) == number or str-length($key) != 0 {
+			@if $i == 0 {
+				$result: to-lower-case($key);
+			} @else {
+				$result: $result + $glue + $key;
+			}
+		}
+		$i: $i + 1;
+	}
+
+	@if $glue-start {
+		$result: $glue + $result;
+	}
+
+	@if $glue-end {
+		$result: $result + $glue;
+	}
+
+	@return unquote($result);
+}
+
+
+/// Transforms pixel value to rem units.
+/// @access public
+/// @param {Number}	$pixel	Unit value in pixels.
+/// @return {Number}
+@function _rem($pixel) {
+	@return #{$pixel / 10}rem;
+}

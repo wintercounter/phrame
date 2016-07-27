@@ -1,0 +1,119 @@
+////
+/// @group String
+/// @author Viktor Vincze
+////
+
+/// Finds and replaces strings in strings to string :)
+/// @access public
+/// @param {String}	$string				Find in
+/// @param {String}	$substr				Find what
+/// @param {String}	&newsubstr	['']	Change to
+/// @param {Number}	$all		[100]	Limit
+/// @return {String}
+@function _str-replace($string, $substr, $newsubstr: '', $all: 100) {
+	$position-found: str-index($string, $substr);
+	$processed: ();
+
+	@while ($position-found and $position-found > 0) {
+		$length-substr: str-length($substr);
+		$processed: append($processed, str-slice($string, 0, $position-found - 1));
+		$processed: append($processed, $newsubstr);
+		$string: str-slice($string, $position-found + $length-substr);
+
+		$position-found: 0;
+
+		@if ($all > 0) {
+			$position-found: str-index($string, $substr);
+		}
+	}
+
+	$processed: append($processed, $string);
+	$string: "";
+
+	@each $s in $processed {
+		$string: #{$string}#{$s};
+	}
+
+	@return $string;
+}
+
+/// Returns a list of strings, each of which is a substring of string formed by splitting it on boundaries formed by the string delimiter.
+/// @access public
+/// @param {String}	$string				Find in
+/// @param {String}	$delimiter	['']	Delimiter
+/// @return {String}
+@function _str-explode($string, $delimiter: '') {
+	$result: ();
+	$length: str-length($string);
+
+	@if str-length($delimiter) == 0 {
+		@for $i from 1 through $length {
+			$result: append($result, str-slice($string, $i, $i));
+		}
+		@return $result;
+	}
+
+	$running: true;
+	$remaining: $string;
+
+	@while $running {
+		$index: str-index($remaining, $delimiter);
+		@if $index {
+			$slice: str-slice($remaining, 1, $index - 1);
+			$result: append($result, $slice);
+			$remaining: str-slice($remaining, $index + str-length($delimiter));
+		} @else {
+			$running: false;
+		}
+	}
+
+	@return append($result, $remaining);
+}
+
+/// Make string's first letter uppercase.
+/// @access public
+/// @param {String}	$string		The string itself.
+/// @return {String}
+@function _str-ucfirst($string) {
+	@return to-upper-case(str-slice($string, 1, 1)) + str-slice($string, 2);
+}
+
+/// Merges a list aof string into one string by a given glue.
+/// @access public
+/// @param {List}	$list							The list of strings.
+/// @param {String}	$glue		[See Global Glue]	The glue to implode with.
+/// @param {Bool}	$is-nested	[false]				Used in case your list is nested (includes multiple level of lists).
+/// @return {String}
+@function _str-implode($list, $glue: _get-global-glue(), $is-nested: false) {
+	$result: '';
+	$temp-list: ();
+
+	@if type-of($list) == list or type-of($list) == arglist {
+
+		// Remove invalid values
+		@each $item in $list {
+			@if type-of($item) == number or (type-of($item) == string and str-length($item) != 0) {
+				$temp-list: append($temp-list, $item);
+			}
+		}
+		$list: $temp-list;
+
+		@for $i from 1 through length($list) {
+			$e: nth($list, $i);
+
+			@if type-of($e) == list {
+				$result: $result#{_str-implode($e, $glue, true)};
+			} @else {
+				@if ($i != length($list) or $is-nested) and (type-of($e) == number or str-length($e) != 0) {
+					$result: $result + $e + $glue;
+				} @else {
+					$result: $result + $e;
+				}
+			}
+		}
+	} @else if type-of($list) == string {
+		$result: $list;
+	}
+
+	@return $result;
+}
