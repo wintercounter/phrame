@@ -1,0 +1,47 @@
+////
+/// Default form configuration options
+/// @group Screen
+/// @author Viktor Vincze
+////
+
+/// @prop {Map}			_screen.size					[See source]	List of different screen sizes. Add your own for more breakpoints.
+/// @prop {Map}			_screen.size.mobile				[See source]	Configuration for a screen (here we use mobile for example).
+/// @prop {Number}		_screen.size.mobile.from		[0]				Bottom size
+/// @prop {Number}		_screen.size.mobile.to			[640]			Top size
+$_screen-config: (
+	size: (
+		mobile: (
+			from: 0,
+			to: 700
+		),
+		tablet: (
+			from: 701,
+			to: 1024,
+		),
+		small: (
+			from: 1025,
+			to: 1440
+		),
+		medium: (
+			from: 1441,
+			to: 1920,
+		),
+		large: (
+			from: 1921,
+			to: 3000
+		)
+	)
+);
+
+// Merge
+$_: _config('_screen', $_screen-config);
+
+/// Helper to get/set config values easier.
+/// @access public
+/// @param {String}	$key				Config key
+/// @param {Mixed}	$value	[false]		Config value
+/// @return {Mixed}
+@function _screen ($key, $value: $_setter-placeholder) {
+	$key: '_screen.' + $key;
+	@return _config($key, $value);
+}

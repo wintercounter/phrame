@@ -1,0 +1,20 @@
+// Init some basic variables
+$_empty-map: map-merge((), ()) !global; // This will have type map, instead of list
+$_config: $_empty-map !global;
+$_config-key-cache: $_empty-map !global;
+$_setter-placeholder: 'it-is-a-getter' !global;
+
+@import 'function/config';
+@import 'function/json';
+@import 'function/string';
+
+@import 'library/color';
+@import 'library/easing';
+
+@import 'config/path';
+@import 'config/scheme';
+@import 'config/screen';
+@import 'config/typography';
+
+@import 'mixin/misc';
+@import 'mixin/screen';

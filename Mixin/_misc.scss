@@ -1,5 +1,6 @@
 ////
 /// Misc mixins but still very useful :)
+/// Thanks Zurb!
 /// @group Misc
 /// @author Viktor Vincze
 ////
@@ -53,4 +54,66 @@
 	width: inherit !important;
 	overflow: visible;
 	clip: auto;
+}
+
+/*
+custom-scrollbar: (
+enabled: false,
+width: 7px,
+		height: 7px,
+				 button: (
+display: none,
+background: 'black.main'
+),
+track-background: 'dark-red.darker',
+thumb: (
+background: 'red.main',
+radius: 10px
+),
+arrow-color: 'yellow.main'
+)
+*/
+
+/// Custom scrollbar styles in IE10+ and Chrome. All other browsers use native.
+/// Configured from system config, the mixin just applies the style.
+/// @access public
+@mixin _scrollbar ($map: _system('custom-scrollbar')){
+	$button: map-get($map, 'button');
+	$thumb: map-get($map, 'thumb');
+
+	& {
+		// IE
+		scrollbar-base-color: _config('_color-library.' + map-get($thumb, 'background'));
+		scrollbar-track-color: _config('_color-library.' + map-get($map, 'track-background'));
+		scrollbar-arrow-color: _config('_color-library.' + map-get($map, 'arrow-color'));
+		scrollbar-shadow-color: rgba(0,0,0,0);
+	}
+
+	// Chrome
+	&::-webkit-scrollbar {
+		width: map-get($map, 'width');
+		height: map-get($map, 'height');
+	}
+
+	&::-webkit-scrollbar-button {
+		background-color: _config('_color-library.' + map-get($button, 'background'));
+		display: map-get($button, 'display');
+	}
+
+	&::-webkit-scrollbar-track-piece {
+		background-color: _config('_color-library.' + map-get($map, 'track-background'));
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: _config('_color-library.' + map-get($thumb, 'background'));
+		border-radius: map-get($thumb, 'radius');
+	}
+
+	&::-webkit-scrollbar-corner {
+		display: none;
+	}
+
+	&::-webkit-resizer {
+		background-color: rgba(255,255,255, 0.5);
+	}
 }

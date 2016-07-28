@@ -13,7 +13,7 @@ $_: _config('_path', (
 /// @param {String}	$key				Config key
 /// @param {String}	$filename	['']	The filename to merge into the path
 /// @return {Mixed}
-@function _path ($key, $filename: '') {
+@function _path($key, $filename: '') {
     $key: '_path.' + $key;
     @return _config($key) + $filename;
 }

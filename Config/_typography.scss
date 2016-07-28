@@ -14,13 +14,9 @@
 /// @prop {Number}		_typography.font-size.h5				[18]				H5 size
 /// @prop {Number}		_typography.font-size.h6				[14]				H6 size
 /// @prop {Number}		_typography.font-size.header-small-text	[0.5em]				Small tag font size in headers (relative to the parent size)
-/// @prop {Number}		_typography.font-size.datalist-title	[20]				Font size of datalist's title
-/// @prop {Number}		_typography.font-size.datalist-data		[14]				Font size of datalist's data
 ///
 /// @prop {Map}			_typography.line-height					[See source]		Line heights
 /// @prop {Number}		_typography.line-height.root			[150%]				Root line height on the HTML element
-///
-/// @prop {Number}		_typography.margin-bottom				[20]				Margin bottom from headers
 ///
 /// @prop {Map}			_typography.font-family					[See source]		Default font families
 /// @prop {String}		_typography.font-family.sans			["Roboto", Arial, sans-serif]
@@ -36,14 +32,11 @@ $_typo-config: (
 		h4: 24,
 		h5: 18,
 		h6: 14,
-		header-small-text: 0.5em,
-		datalist-title: 22,
-		datalist-data: 16
+		header-small-text: 0.5em
 	),
 	line-height: (
 		root: 150%
 	),
-	margin-bottom: 20,
 	font-family: (
 		sans: unquote('"Roboto", Arial, sans-serif'),
 		serif: unquote('"Roboto Slab", "Times New Roman", serif'),

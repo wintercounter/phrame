@@ -7,7 +7,6 @@
 /// @access private
 /// @param {String}	$original	Config key to get the value for.
 /// @return {Mixed}
-$ikra: 0 !global;
 @function _config-get($original) {
 
 	@if map-has-key($_config-key-cache, $original) {
@@ -22,8 +21,7 @@ $ikra: 0 !global;
 		@if map-has-key($result, $key) {
 			$result: map-get($result, $key);
 		} @else {
-			$ikra: $ikra+1 !global;
-			@warn $ikra 'No such config key: ' + $original;
+			@warn 'No such config key: ' + $original;
 			@return $original;
 		}
 	}
@@ -115,76 +113,4 @@ $ikra: 0 !global;
 	} @else {
 		@return _config-set($key, $value);
 	}
-}
-
-/// Gets the glue for selectors based on the configured selector style.
-/// @access public
-/// @return {String}
-@function _get-global-glue() {
-	$style: _system(selector-style);
-	@if $style == dash-ed {
-		@return '-';
-	} @else if $style == camelCase {
-		@return '';
-	} @else if $style == under_score {
-		@return '_';
-	}
-}
-
-/// Formats a string as a selector according to the selector style setting.
-/// @access public
-/// @param {String}			$string						The selector.
-/// @param {String | Bool}	$glue-start		[false]		Append glue to the beginning?
-/// @param {String | Bool}	$glue-end		[false]		Append glue to the ending?
-/// @param {Bool}			$global-prefix	[false]		Append global prefix to the beginning?
-/// @return {String}
-@function _format-selector($string, $glue-start: false, $glue-end: false, $global-prefix: false) {
-
-	$style: _system('selector-style');
-	$keys: _str-explode($string, '-');
-	$glue: _get-global-glue();
-	$result: '';
-
-	@if $global-prefix {
-		$keys: join(_system('prefix'), $keys);
-	}
-
-	@if $style == camelCase {
-		$temp: ();
-		@each $key in $keys {
-			$temp: append($temp, _str-ucfirst($key));
-		}
-		$keys: $temp;
-	}
-
-	$i: 0;
-	@each $key in $keys {
-		@if type-of($key) == number or str-length($key) != 0 {
-			@if $i == 0 {
-				$result: to-lower-case($key);
-			} @else {
-				$result: $result + $glue + $key;
-			}
-		}
-		$i: $i + 1;
-	}
-
-	@if $glue-start {
-		$result: $glue + $result;
-	}
-
-	@if $glue-end {
-		$result: $result + $glue;
-	}
-
-	@return unquote($result);
-}
-
-
-/// Transforms pixel value to rem units.
-/// @access public
-/// @param {Number}	$pixel	Unit value in pixels.
-/// @return {Number}
-@function _rem($pixel) {
-	@return #{$pixel / 10}rem;
 }

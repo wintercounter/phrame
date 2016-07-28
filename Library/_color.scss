@@ -1,0 +1,58 @@
+////
+/// A library of available colors
+/// @group Scheme
+/// @author Viktor Vincze
+////
+
+$_color-library: (
+	'transparent':		transparent,
+	'white': (
+		'main': 		#ffffff,
+	),
+	'black': (
+		'main': 		#000000,
+		'light':		#202020,
+	),
+	'social': (
+		'facebook': 	#3B5998,
+		'twitter':		#55ACEE,
+		'instagram':	#3F729B,
+		'google-plus':	#DD4B39,
+		'tumblr':		#36465D
+	),
+	'gradient': (
+		'example': (#ffffff #000000),
+	)
+);
+
+// Merge
+$_: _config('_color-library', $_color-library);
+
+// Generate opacity'd values
+$_: ();
+
+@for $i from 0 through 100 {
+	$val: $i / 100;
+	$white-key: white-opacity-#{$i};
+	$white-val: rgba(255, 255, 255, $val);
+	$black-key: black-opacity-#{$i};
+	$black-val: rgba(0, 0, 0, $val);
+
+	$_: map-merge($_, (
+		$white-key: $white-val,
+		$black-key: $black-val
+	));
+}
+
+// Merge into
+$_: _config('_color-library', $_);
+
+/// Helper to get/set library values easier.
+/// @access public
+/// @param {String}	$key				Config key
+/// @param {Mixed}	$value	[false]		Config value
+/// @return {Mixed}
+@function _color-library($key, $value: $_setter-placeholder) {
+	$key: '_color-library.' + $key;
+	@return _color-library($key, $value);
+}
