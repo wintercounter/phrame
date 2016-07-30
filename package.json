@@ -1,0 +1,19 @@
+{
+  "name": "phrame",
+  "version": "1.0.0",
+  "description": "Modular, configurable SASS framework to be used with CSS modules.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DoclerLabs/phrame.git"
+  },
+  "author": "Victor Vincent",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DoclerLabs/phrame/issues"
+  },
+  "homepage": "https://github.com/DoclerLabs/phrame#readme"
+}
