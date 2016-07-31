@@ -56,28 +56,24 @@
 	clip: auto;
 }
 
-/*
-custom-scrollbar: (
-enabled: false,
-width: 7px,
-		height: 7px,
-				 button: (
-display: none,
-background: 'black.main'
-),
-track-background: 'dark-red.darker',
-thumb: (
-background: 'red.main',
-radius: 10px
-),
-arrow-color: 'yellow.main'
-)
-*/
-
 /// Custom scrollbar styles in IE10+ and Chrome. All other browsers use native.
 /// Configured from system config, the mixin just applies the style.
 /// @access public
-@mixin _scrollbar ($map: _system('custom-scrollbar')){
+@mixin _scrollbar ($map: (
+	enabled: false,
+	width: 7px,
+	height: 7px,
+	button: (
+		display: none,
+		background: 'black.main'
+	),
+	track-background: 'dark-red.darker',
+	thumb: (
+		background: 'red.main',
+		radius: 10px
+	),
+	arrow-color: 'yellow.main'
+)){
 	$button: map-get($map, 'button');
 	$thumb: map-get($map, 'thumb');
 
