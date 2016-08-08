@@ -4,6 +4,7 @@ $_config: $_empty-map !global;
 $_config-key-cache: $_empty-map !global;
 $_setter-placeholder: 'it-is-a-getter' !global;
 
+@import 'function/system';
 @import 'function/config';
 @import 'function/json';
 @import 'function/string';
