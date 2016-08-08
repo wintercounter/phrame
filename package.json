@@ -1,6 +1,6 @@
 {
   "name": "phrame",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Modular, configurable SASS framework to be used with CSS modules.",
   "main": "index.js",
   "scripts": {
