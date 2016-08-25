@@ -369,7 +369,7 @@
       @return $string;
     }
 
-    @if      str-length($r) < $max {
+    @if str-length($r) < $max {
       $r: $r + $c;
     } @else if str-length($g) < $max {
       $g: $g + $c;

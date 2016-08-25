@@ -1,6 +1,6 @@
-/// Must have framework rules
-/// @group Must
-/// @author Viktor Vincze
+/// Some rules for basic styles
+/// @group Basic
+/// @author Victor Vincent
 
 html {
 	font-size: _typo('font-size.root');
@@ -12,10 +12,6 @@ body {
 	font-weight: normal;
 	font-style: normal;
 	line-height: _typo('line-height.root');
-
-	/*@if _system('custom-scrollbar.enabled') {
-		@include _scrollbar;
-	}*/
 
 	&:before {
  		display: none;

@@ -1,9 +1,5 @@
 $_: _config('_path', (
-	common: 		'../../common/images/',
-	images-mc:		'../images/',
-	images-reg:		'../../registration/images/',
-	landing-page:	'../../registration/images/landing/',
-	logo: 			'../../common/images/logo/'
+	// backgrounds: '../backgrounds/',
 ));
 
 /// Helper to get/set config values easier.

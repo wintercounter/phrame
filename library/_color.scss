@@ -1,51 +1,40 @@
 ////
 /// A library of available colors
 /// @group Scheme
-/// @author Viktor Vincze
+/// @author Victor Vincent
 ////
 
 $_color-library: (
-	'transparent':		transparent,
+	'transparent':			transparent,
 	'white': (
-		'main': 		#ffffff,
+		'main': 			#ffffff,
 	),
 	'black': (
-		'main': 		#000000,
-		'light':		#202020,
+		'main': 			#000000
+	),
+	'red': (
+		'main':				#ff0000,
+	),
+	'yellow': (
+		'main':				#ffcc00,
+	),
+	'green': (
+		'main'				#00ff00
 	),
 	'social': (
-		'facebook': 	#3B5998,
-		'twitter':		#55ACEE,
-		'instagram':	#3F729B,
-		'google-plus':	#DD4B39,
-		'tumblr':		#36465D
+		'facebook': 		#3B5998,
+		'twitter':			#55ACEE,
+		'instagram':		#3F729B,
+		'google-plus':		#DD4B39,
+		'tumblr':			#36465D
 	),
 	'gradient': (
-		'example': (#ffffff #000000),
+		'white-to-black':	(#ffffff #000000),
 	)
 );
 
 // Merge
 $_: _config('_color-library', $_color-library);
-
-// Generate opacity'd values
-$_: ();
-
-@for $i from 0 through 100 {
-	$val: $i / 100;
-	$white-key: white-opacity-#{$i};
-	$white-val: rgba(255, 255, 255, $val);
-	$black-key: black-opacity-#{$i};
-	$black-val: rgba(0, 0, 0, $val);
-
-	$_: map-merge($_, (
-		$white-key: $white-val,
-		$black-key: $black-val
-	));
-}
-
-// Merge into
-$_: _config('_color-library', $_);
 
 /// Helper to get/set library values easier.
 /// @access public

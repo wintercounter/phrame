@@ -2,7 +2,7 @@
 /// Misc mixins but still very useful :)
 /// Thanks Zurb!
 /// @group Misc
-/// @author Viktor Vincze
+/// @author Victor Vincent
 ////
 
 /// Creates CSS triangles using the border technique
@@ -10,7 +10,7 @@
 /// @param {String}		$triangle-size			Used to set border-size. No default, set a px or em size.
 /// @param {String}		$triangle-color			Used to set border-color which makes up triangle. No default
 /// @param {String}		$triangle-direction		Used to determine which direction triangle points. Options: top, bottom, left, right
-@mixin _css-triangle($triangle-size, $triangle-color, $triangle-direction) {
+@mixin _triangle($triangle-size, $triangle-color, $triangle-direction) {
 	content: "";
 	display: block;
 	width: 0;
@@ -57,29 +57,24 @@
 }
 
 /// Custom scrollbar styles in IE10+ and Chrome. All other browsers use native.
-/// Configured from system config, the mixin just applies the style.
 /// @access public
-@mixin _scrollbar ($map: (
-	enabled: false,
+$_scrollbarDefaults: (
 	width: 7px,
 	height: 7px,
-	button: (
-		display: none,
-		background: 'black.main'
-	),
-	track-background: 'dark-red.darker',
-	thumb: (
-		background: 'red.main',
-		radius: 10px
-	),
-	arrow-color: 'yellow.main'
-)){
-	$button: map-get($map, 'button');
-	$thumb: map-get($map, 'thumb');
+	button-display: none,
+	button-background: 'black.main',
+	track-background: 'black.main',
+	thumb-background: 'white.main',
+	thumb-radius: 10px,
+	arrow-color: 'white.main'
+) !global;
+
+@mixin _scrollbar ($map: $_scrollbarDefaults){
+	$map: map-merge($_scrollbarDefaults, $map);
 
 	& {
 		// IE
-		scrollbar-base-color: _config('_color-library.' + map-get($thumb, 'background'));
+		scrollbar-base-color: _config('_color-library.' + map-get($map, 'thumb-background'));
 		scrollbar-track-color: _config('_color-library.' + map-get($map, 'track-background'));
 		scrollbar-arrow-color: _config('_color-library.' + map-get($map, 'arrow-color'));
 		scrollbar-shadow-color: rgba(0,0,0,0);
@@ -92,8 +87,8 @@
 	}
 
 	&::-webkit-scrollbar-button {
-		background-color: _config('_color-library.' + map-get($button, 'background'));
-		display: map-get($button, 'display');
+		background-color: _config('_color-library.' + map-get($map, 'button-background'));
+		display: map-get($map, 'button-display');
 	}
 
 	&::-webkit-scrollbar-track-piece {
@@ -101,8 +96,8 @@
 	}
 
 	&::-webkit-scrollbar-thumb {
-		background-color: _config('_color-library.' + map-get($thumb, 'background'));
-		border-radius: map-get($thumb, 'radius');
+		background-color: _config('_color-library.' + map-get($map, 'thumb-background'));
+		border-radius: map-get($map, 'thumb-radius');
 	}
 
 	&::-webkit-scrollbar-corner {

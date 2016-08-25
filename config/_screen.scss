@@ -1,13 +1,13 @@
 ////
 /// Default form configuration options
 /// @group Screen
-/// @author Viktor Vincze
+/// @author Victor Vincent
 ////
 
 /// @prop {Map}			_screen.size					[See source]	List of different screen sizes. Add your own for more breakpoints.
 /// @prop {Map}			_screen.size.mobile				[See source]	Configuration for a screen (here we use mobile for example).
 /// @prop {Number}		_screen.size.mobile.from		[0]				Bottom size
-/// @prop {Number}		_screen.size.mobile.to			[640]			Top size
+/// @prop {Number}		_screen.size.mobile.to			[700]			Top size
 $_screen-config: (
 	size: (
 		mobile: (
