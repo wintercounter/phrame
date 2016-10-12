@@ -9,7 +9,7 @@
 /// @return {Mixed}
 @function _config-get($original) {
 
-	@if (str-index('@', $original) != 0) {
+	@if (str-index('@', $original) == 1) {
 		@return _config-get(_str-replace('@', ''));
 	}
 
