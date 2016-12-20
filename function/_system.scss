@@ -89,6 +89,7 @@
 	@while $i > 0 {
 		$key: nth($keys, $i);
 		$piece: nth($pieces, $i);
+		$piece: if(type-of($piece) != map, map-merge((), ()), $piece);
 
 		@if $i == $keysNum {
 			$nextPiece: map-merge($piece, ($key: $value));
