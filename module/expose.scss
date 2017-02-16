@@ -1,0 +1,8 @@
+/// Exposes breakpoints inside the CSS as JSON string.
+/// @group Expose
+/// @author Victor Vincent
+
+body::before {
+    display: none;
+    content: "#{json-encode(_config('_screen'))}";
+}

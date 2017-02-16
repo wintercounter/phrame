@@ -12,11 +12,6 @@ body {
 	font-weight: normal;
 	font-style: normal;
 	line-height: _typo('line-height.root');
-
-	&:before {
- 		display: none;
-		content: "#{json-encode(_config('_screen'))}";
-	}
 }
 
 *, *:after, *:before {
