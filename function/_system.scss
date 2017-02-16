@@ -115,9 +115,8 @@
 @function _config($key, $value: $_setter-placeholder) {
 	@if $value == $_setter-placeholder {
 		@return _config-get($key);
-	} @else {
-		@return _config-set($key, $value);
 	}
+	@return _config-set($key, $value);
 }
 
 /// Converts pixel value into em according to a $context value.

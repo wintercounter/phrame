@@ -123,11 +123,141 @@ the environment configurable, you may end up having multiple configuration files
 
 ## `@function _config(key[, value])`
 
-- `key`: The key of the config property (size.small)
-- `value` (optional):
+- `key` The key of the config property (size.small)
+- `value` (optional): any
 
 > **Good to know:** key is optional too. Returns full config object. Good for debugging purposes.
 
 > **Good to know:** this is just a shorthand function, `_config-set` and `_config-get` is available too.
 
-### Usage
+### Usage examples
+
+#### Override config
+```scss
+// Defaults
+$_: _config('_namespace', (
+    'option-1': 'original-value-1',
+    'option-2': 'original-value-2',
+    'option-3': 'original-value-3'
+));
+
+// Overwrites
+$_: _config('_namespace', (
+    'option-1': 'new-value-1',
+    'option-new-1': 'new-value-2'
+));
+
+// Results
+$_: _config('_namespace', (
+    'option-1': 'new-value-1',
+    'option-2': 'original-value-2',
+    'option-3': 'original-value-3',
+    'option-new-1': 'new-value-2'
+));
+```
+
+#### Merge multiple levels
+```scss
+// Defaults
+$_: _config('_namespace', (
+    'option-1': (
+        'inner-option-1': 12px
+    ),
+    'option-2': 'original-value-2'
+));
+
+// Overwrites
+$_: _config('_namespace', (
+    'option-1': (
+        'new-inner-option': 'value'
+    ),
+    'option-2': 'original-value-2'
+));
+
+// Results
+$_: _config('_namespace', (
+    'option-1': (
+        'inner-option-1': 12px,
+        'new-inner-option': 'value'
+    ),
+    'option-2': 'original-value-2'
+));
+```
+
+#### Simplified write
+```scss
+// Defaults
+$_: _config('_namespace', (
+    'option-1': (
+        'inner-option': 12px
+    ),
+    'option-2': 'original-value-2'
+));
+
+// Set new value
+$_: _config('_namespace.option-1.inner-option', 20px);
+
+// Results
+$_: _config('_namespace', (
+	'option-1': (
+		'inner-option': 20px
+	),
+	'option-2': 'original-value-2'
+));
+```
+
+## Built-in Config Tools
+
+There are some built-in utilities based on the config management system.
+All of them have shorthands, but under the hood the're using `_config()`
+with a namespace like `_scheme`.
+
+These tools are made to manage the most common aspects:
+
+- **path:** asset urls
+- **scheme:** colors
+- **screen:** responsiveness
+- **typography:** sizes, families
+
+### `_path(key[, filename])`
+
+- `key` The key of the path
+- `filename` _(optional)_ Name of the file
+
+```scss
+// Defaults from Phrame
+$_: _config('_path', (
+	'backgrounds': '../backgrounds/',
+));
+
+// Extend with your own
+$_: _path('_path', (
+    'medals': (
+        'direct-bg': '../images/medals/bg.png',
+        'bronze': '../images/medals/bronze/',
+        'silver': '../images/medals/silver/',
+        'gold': '../images/medals/gold/'
+    )
+));
+
+// Use it
+body {
+    background-image: url(_path('backgrounds', 'blue.jpg'));
+}
+
+.medals{
+    background-image: url(_path('medals.direct-bg'));
+}
+
+.medal {
+    &-gold {
+        background-image: url(_path('medals.gold', 'small.jpg'));
+    }
+    ...
+}
+```
+
+### `_color(key[, value])`
+
+- `key` Color key path
+- `value` _(optional)_ Value of the color key
