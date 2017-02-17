@@ -81,8 +81,8 @@ Now use it:
 The config system uses Sass Maps as a multi dimensional array - since Sass is only able to handle a
 single level (looking at you map-get).
 
-With building **Phrame**`2` my primary goal was to build a flexible tool to handle multiple
-sites from one codebase. For this to work I needed a system where it's simple to override the common stuff
+With **Phrame**`2` my primary goal was to build a flexible tool to handle multiple
+sites/schemes/styles/layouts from one codebase. For this to work I needed a system where it's simple to override the common stuff
 and makes easy to switch color schemes for example. To achieve this I've built a flow where you can overwrite
 the default configuration.
 
@@ -737,7 +737,7 @@ we have that in every modern browser, I'm totally satisfied with the bloat free 
 bloat-free markup I get. It looks ugly in _React_ components anyway.
 
 However, since modules are optional, maybe I'll consider to have more modules included
-(and/or port some from `1`, everyone can decide which one to use for his project.
+(and/or port some from `1`), everyone can decide which one to use for his project.
 
 # Final words
 As you can see, **Phrame**`2` is not a full featured framework.
