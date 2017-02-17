@@ -1,7 +1,7 @@
-# Phrame
+# Phrame`2`
 Modular, configurable SASS framework mostly to be used with CSS modules.
 
-# What **Phrame** offers:
+# What **Phrame**`2` offers:
 - 0kb footprint
 - Multilevel configuration system
 - Config references
@@ -43,6 +43,9 @@ Modular, configurable SASS framework mostly to be used with CSS modules.
   * [`basic`](#basic)
   * [`reset`](#reset)
   * [`expose`](#expose)
+- [Q&A](#qa)
+  * [Why Phrame`2`, where is the first one?](#why-phrame2-where-is-the-first-one)
+  * [Why no more modules (grid, form elements, etc.) and other shiny mixins?](#why-no-more-modules-grid-form-elements-etc-and-other-shiny-mixins)
 - [Final words](#final-words)
 
 <!-- tocstop -->
@@ -69,7 +72,7 @@ Now use it:
 @import '~phrame2/module/expose';
 ```
 
-> **Phrame** related stuff (mixins, functions, etc.) are prefixed with an `_` so **Phrame** won't conflict your codebase.
+> **Phrame**`2` related stuff (mixins, functions, etc.) are prefixed with an `_` so **Phrame**`2` won't conflict your codebase.
 
 ---
 
@@ -78,16 +81,16 @@ Now use it:
 The config system uses Sass Maps as a multi dimensional array - since Sass is only able to handle a
 single level (looking at you map-get).
 
-With building **Phrame** my primary goal was to build a flexible tool to handle multiple
-sites from one codebase. For this to work we needed a system where it's simple to override the common stuff
-and makes easy to switch color schemes for example. To achieve this we've built a flow where you can overwrite
+With building **Phrame**`2` my primary goal was to build a flexible tool to handle multiple
+sites from one codebase. For this to work I needed a system where it's simple to override the common stuff
+and makes easy to switch color schemes for example. To achieve this I've built a flow where you can overwrite
 the default configuration.
 
 ## Flow
 
-To use such behavior you need to import your own instance of **Phrame** into your codebase.
+To use such behavior you need to import your own instance of **Phrame**`2` into your codebase.
 
-`Load Phrame Env -> Config Overrides -> Output`
+`Load Phrame2 Env -> Config Overrides -> Output`
 
 Here's a basic structure with the ability to override config values:
 
@@ -113,7 +116,7 @@ import styles from './MyAwesomeCmp.scss'
 
 `MyAwsomeCmp.scss`
 ```scss
-// Always import this `core` instead of Phrame directly
+// Always import this `core` instead of Phrame2 directly
 @import '../../scss/core';
 
 body {
@@ -153,7 +156,7 @@ $_: _config('size', (
 In case you're building a multi-(site/color) solution, or just need to make
 the environment configurable, you may end up having multiple configuration files.
 
-**Phrame** comes with multiple solutions to manage these options/values easily.
+**Phrame2** comes with multiple solutions to manage these options/values easily.
 
 ## `@function _config(key[, value])`
 
@@ -259,7 +262,7 @@ These tools are made to manage the most common aspects:
 - `$filename` _(optional)_ Name of the file
 
 ```scss
-// Defaults from Phrame
+// Defaults from Phrame2
 $_: _config('_path', (
     'backgrounds': '../backgrounds/',
 ));
@@ -651,18 +654,18 @@ It's a good practice to load these modules at boot level.
 
 ```scss
 // Common usage and flow
-@import '~phrame/core';
+@import '~phrame2/core';
 @import 'myConfigOverrides';
-@import '~phrame/module/reset';
-@import '~phrame/module/basic';
-@import '~phrame/module/expose';
+@import '~phrame2/module/reset';
+@import '~phrame2/module/basic';
+@import '~phrame2/module/expose';
 @import 'myOwnStuff';
 ```
 
 ## `basic`
 
 Includes some basic styles for your page.
-Here is the full code of the module, we'll walk through it now.
+Here is the full code of the module, I'll walk through it now.
 
 ```scss
 html {
@@ -709,7 +712,34 @@ let breakpoints = JSON.parse(
 )
 ```
 
+# Q&A
+
+## Why Phrame`2`, where is the first one?
+**Phrame**`1` is still alive. It's almost the same, except the bloat. It's like
+those powerful frameworks out there seeing every day, and even more.
+Using the same configuration system, it is generating modules based on configurations
+like grid, form elements and such.
+
+Then started to use CSS modules... I wanted to have a system I can import into the
+Scss explicitly without any footprint. So basically **Phrame**`2` is the shell of the first one.
+
+Oh yeah, I've almost forgot. The name is also taken on _npm_ :)
+
+## Why no more modules (grid, form elements, etc.) and other shiny mixins?
+Because **Phrame**`2` more like a shell than a framework unlike the first version.
+Also there is no grid module because when I started to use CSS modules with flexbox,
+I've realized it's easier just to write my needs own my own.
+
+`float` and `inline-block` based grids are simple, it's easy to write a few classes, a generator around it.
+But `flexbox` is flexible (oO). Every `flexbox` based grids out there are totally different.
+Simply because it is not designed for grids. __CSS grids__ are for grids, but until
+we have that in every modern browser, I'm totally satisfied with the bloat free stylesheet and
+bloat-free markup I get. It looks ugly in _React_ components anyway.
+
+However, since modules are optional, maybe I'll consider to have more modules included
+(and/or port some from `1`, everyone can decide which one to use for his project.
+
 # Final words
-As you can see, **Phrame** is not a full featured framework.
-It's a higher order helper instead to kick start your own framework,
+As you can see, **Phrame**`2` is not a full featured framework.
+It's a higher order shell instead to kick start your own framework,
 it helps to build your own system for your own custom needs.
