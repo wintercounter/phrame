@@ -11,7 +11,41 @@ Modular, configurable SASS framework mostly to be used with CSS modules.
 - Helper mixins
 - Modules
 - No bloat
-- Use on existing codebases
+- Use on existing codebase
+
+# Table of contents
+
+<!-- toc -->
+
+- [Basic setup](#basic-setup)
+- [Config system](#config-system)
+  * [Flow](#flow)
+- [Config Management](#config-management)
+  * [`@function _config(key[, value])`](#function-_configkey-value)
+    + [Usage examples](#usage-examples)
+      - [Override config](#override-config)
+      - [Merge multiple levels](#merge-multiple-levels)
+      - [Simplified write](#simplified-write)
+  * [Built-in Tools](#built-in-tools)
+    + [`@function _path($key[, $filename])`](#function-_pathkey-filename)
+    + [`@function _scheme($key[, $value])`](#function-_schemekey-value)
+    + [`@function _color-library($key[, $value])`](#function-_color-librarykey-value)
+    + [`@function _screen($key[, $value])`](#function-_screenkey-value)
+    + [`@function _typo($key[, $value])`](#function-_typokey-value)
+    + [`@function _em($target, $base)`](#function-_emtarget-base)
+    + [`@function _easing($key[, $value])`](#function-_easingkey-value)
+  * [Referencing keys](#referencing-keys)
+- [Mixins](#mixins)
+  * [`@mixin _triangle($size, $color, $direction)`](#mixin-_trianglesize-color-direction)
+  * [`@mixin _scrollbar([$overrides])`](#mixin-_scrollbaroverrides)
+  * [`@mixin _on($breakpoint[, $up-down, $orientation])`](#mixin-_onbreakpoint-up-down-orientation)
+- [Modules](#modules)
+  * [`basic`](#basic)
+  * [`reset`](#reset)
+- [`expose`](#expose)
+- [Final words](#final-words)
+
+<!-- tocstop -->
 
 # Basic setup
 
@@ -119,14 +153,14 @@ $_: _config('size', (
 In case you're building a multi-(site/color) solution, or just need to make
 the environment configurable, you may end up having multiple configuration files.
 
-**Phrame** comes with multiple solutions to easier manage these options/values.
+**Phrame** comes with multiple solutions to manage these options/values easily.
 
 ## `@function _config(key[, value])`
 
 - `key` The key of the config property (size.small)
 - `value` (optional): any
 
-> **Good to know:** key is optional too. Returns full config object. Good for debugging purposes.
+> **Good to know:** in fact, key is optional too. Returns full config object. Good for debugging purposes.
 
 > **Good to know:** this is just a shorthand function, `_config-set` and `_config-get` is available too.
 
@@ -483,7 +517,7 @@ Shorthand function to get/set easing related values.
 }
 ```
 
-### Referencing keys
+## Referencing keys
 
 Sometimes you might want to say like:
 "I want this text to have the same color always as the title."
@@ -505,9 +539,9 @@ $_: _config('subpage-scheme', (
 }
 ```
 
-## Mixins
+# Mixins
 
-### `@mixin _triangle($size, $color, $direction)`
+## `@mixin _triangle($size, $color, $direction)`
 
 Creates a CSS triangle. Based on Zurb Foundation's solution.
 
@@ -527,7 +561,7 @@ Creates a CSS triangle. Based on Zurb Foundation's solution.
 }
 ```
 
-### `@mixin _scrollbar([$overrides])`
+## `@mixin _scrollbar([$overrides])`
 
 Styles scrollbars where it's possible through CSS.
 Supports IE10+ and Chrome. Rest of the browsers doesn't allow,
@@ -565,7 +599,7 @@ $_: _scheme('scrollbar', (
 
 ```
 
-### `@mixin _on($breakpoint[, $up-down, $orientation])`
+## `@mixin _on($breakpoint[, $up-down, $orientation])`
 
 Handles responsive rules
 
@@ -610,7 +644,7 @@ Handles responsive rules
 }
 ```
 
-## Modules
+# Modules
 
 Modules are _optional_. Modules have output!
 It's a good practice to load these modules at boot level.
@@ -625,7 +659,7 @@ It's a good practice to load these modules at boot level.
 @import 'myOwnStuff';
 ```
 
-### `basic`
+## `basic`
 
 Includes some basic styles for your page.
 Here is the full code of the module, we'll walk through it now.
@@ -652,13 +686,13 @@ body {
 }
 ```
 
-### `reset`
+## `reset`
 
 A simple reset. You might not need this in case you already have
 your site built, or using some sort of framework, usually all
 framework are shipped with reset styles.
 
-## `expose`
+# `expose`
 This feature was usefull many times for us. It exposes your screen configuration (breakpoints)
 as JSON in your CSS on `body::before`. This will let you to have
 the same rules in JavaScript also, the rules are have to be maintained
