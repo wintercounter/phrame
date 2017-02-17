@@ -219,7 +219,7 @@ These tools are made to manage the most common aspects:
 - **screen:** responsiveness
 - **typography:** sizes, families
 
-### `_path($key[, $filename])`
+### `@function _path($key[, $filename])`
 
 - `$key` The key of the path
 - `$filename` _(optional)_ Name of the file
@@ -257,7 +257,7 @@ body {
 }
 ```
 
-### `_scheme($key[, $value])`
+### `@function _scheme($key[, $value])`
 
 - `$key` Scheme key path
 - `$value` _(optional)_ Color library reference or unit value
@@ -349,14 +349,14 @@ dozens of times. Keeping the available color palette in the **Color Library**
 solves this issue, helps you prevent duplicates and also provides a proper name
 (key) to get the correct color.
 
-### `_color-library($key[, $value])`
+### `@function _color-library($key[, $value])`
 
 - `$key` Key of the value
 - `$value` _(optional)_ Value itself
 
 Shorthand function to get/set color-library related values.
 
-### `_screen($key[, $value])`
+### `@function _screen($key[, $value])`
 
 - `$key` Key of the value
 - `$value` _(optional)_ Value itself
@@ -407,7 +407,7 @@ $_: _screen('size', (
 ));
 ```
 
-### `_typo($key[, $value])`
+### `@function _typo($key[, $value])`
 
 - `$key` Key of the value
 - `$value` _(optional)_ Value itself
@@ -443,7 +443,7 @@ These values will be used by the `basic` module, but it's optional.
 
 See `basic` module for more details.
 
-### `_em($target, $base)`
+### `@function _em($target, $base)`
 
 Function used for `em` value calculations.
 
@@ -464,7 +464,7 @@ div {
 Please not that for this to work correctly, you need to use `62.5%`
 as your root font-size. See `basic` module details about this.
 
-### `_easing($key[, $value])`
+### `@function _easing($key[, $value])`
 
 - `$key` Key of the easing
 - `$value` _(optional)_ Easing value
@@ -485,7 +485,7 @@ Shorthand function to get/set easing related values.
 
 ## Mixins
 
-### `_triangle($size, $color, $direction)`
+### `@mixin _triangle($size, $color, $direction)`
 
 Creates a CSS triangle. Based on Zurb Foundation's solution.
 
@@ -505,7 +505,7 @@ Creates a CSS triangle. Based on Zurb Foundation's solution.
 }
 ```
 
-### `_scrollbar([$overrides])`
+### `@mixin _scrollbar([$overrides])`
 
 Styles scrollbars where it's possible through CSS.
 Supports IE10+ and Chrome. Rest of the browsers doesn't allow,
@@ -543,7 +543,7 @@ $_: _scheme('scrollbar', (
 
 ```
 
-### `_on($breakpoint[, $up-down, $orientation])`
+### `@mixin _on($breakpoint[, $up-down, $orientation])`
 
 Handles responsive rules
 
