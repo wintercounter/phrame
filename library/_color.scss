@@ -5,32 +5,32 @@
 ////
 
 $_color-library: (
-	'transparent':			transparent,
-	'white': (
-		'main': 			#ffffff,
-	),
-	'black': (
-		'main': 			#000000
-	),
-	'red': (
-		'main':				#ff0000,
-	),
-	'yellow': (
-		'main':				#ffcc00,
-	),
-	'green': (
-		'main'				#00ff00
-	),
-	'social': (
-		'facebook': 		#3B5998,
-		'twitter':			#55ACEE,
-		'instagram':		#3F729B,
-		'google-plus':		#DD4B39,
-		'tumblr':			#36465D
-	),
-	'gradient': (
-		'white-to-black':	(#ffffff #000000),
-	)
+    'transparent':			transparent,
+    'white': (
+        'main': 			#ffffff,
+    ),
+    'black': (
+        'main': 			#000000
+    ),
+    'red': (
+        'main':				#ff0000,
+    ),
+    'yellow': (
+        'main':				#ffcc00,
+    ),
+    'green': (
+        'main':				#00ff00
+    ),
+    'social': (
+        'facebook': 		#3B5998,
+        'twitter':			#55ACEE,
+        'instagram':		#3F729B,
+        'google-plus':		#DD4B39,
+        'tumblr':			#36465D
+    ),
+    'gradient': (
+        'white-to-black':	(#ffffff #000000),
+    )
 );
 
 // Merge
@@ -42,6 +42,6 @@ $_: _config('_color-library', $_color-library);
 /// @param {Mixed}	$value	[false]		Config value
 /// @return {Mixed}
 @function _color-library($key, $value: $_setter-placeholder) {
-	$key: '_color-library.' + $key;
-	@return _color-library($key, $value);
+    $key: '_color-library.' + $key;
+    @return _color-library($key, $value);
 }

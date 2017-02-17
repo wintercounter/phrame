@@ -24,13 +24,7 @@
 $_typo-config: (
 	font-size: (
 		root: 62.5%, // Should not be changed, used for em calculations.
-		base: 14,
-		h1: 42,
-		h2: 36,
-		h3: 30,
-		h4: 24,
-		h5: 18,
-		h6: 14
+		base: 14
 	),
 	line-height: (
 		root: 1.5
@@ -38,7 +32,7 @@ $_typo-config: (
 	font-family: (
 		sans: unquote('Arial, Helvetica, sans-serif'),
 		serif: unquote('"Times New Roman", Times, serif'),
-		secondary: unquote('"Courier New", Courier6, monospace')
+		secondary: unquote('"Courier New", Courier, monospace')
 	)
 );
 

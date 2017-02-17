@@ -196,7 +196,7 @@
 /// @require {function} _from-hex
 /// @require {function} _from-rgb
 /// @require {function} _from-hsl
-@function _color($string) {
+@function _toColor($string) {
   @if type-of($string) == "color" {
     @return $string;
   }
@@ -553,7 +553,7 @@
 /// @require {function} _throw
 /// @require {function} _find-ending-quote
 /// @require {function} _strip-token
-/// @require {function} _color
+/// @require {function} _toColor
 /// @require {function} _length
 @function _json-decode--string($source, $pointer) {
   // Check for the end of the string
@@ -579,7 +579,7 @@
 
     // Test whether the string could be a CSS color
     @if type-of($string) == "string" {
-      $string: _color($string);
+      $string: _toColor($string);
     }
   }
 

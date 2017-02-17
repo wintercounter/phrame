@@ -7,45 +7,68 @@
 /// Default/Global scheme config
 $_scheme-config: (
 
-	// Commons
-	common: (
-		alert: 'yellow.main',
-		success: 'green.main',
-		error: 'red.main',
-		disabled: 'gray.main'
+    // Commons
+    common: (
+        alert: 'yellow.main',
+        success: 'green.main',
+        error: 'red.main',
+        disabled: 'gray.main'
+    ),
+
+    // Typography
+    text: (
+        base: 'black.main',
+        link: 'yellow.main',
+        link-hover: 'black.main'
+    ),
+
+	scrollbar: (
+		width: 7px,
+		height: 7px,
+		button-display: false,
+		button-background: 'black.main',
+		track-background: 'black.main',
+		thumb-background: 'white.main',
+		thumb-radius: 10px,
+		arrow-color: 'white.main'
 	),
 
-	// Typography
-	text: (
-		base: 'black.main',
-		link: 'yellow.main',
-		link-hover: 'black.main'
-	),
-
-	// Socials
-	social: (
-		facebook: 'social.facebook',
-		twitter: 'social.twitter',
-		instagram: 'social.instagram',
-		google-plus: 'soacial.google-plus',
-		tumblr: 'social.tumblr'
-	)
+    // Socials
+    social: (
+        facebook: 'social.facebook',
+        twitter: 'social.twitter',
+        instagram: 'social.instagram',
+        google-plus: 'soacial.google-plus',
+        tumblr: 'social.tumblr'
+    )
 );
 
 // Merge
-$_: _config('_color', $_scheme-config);
+$_: _config('_scheme', $_scheme-config);
 
 /// Helper to get/set config values easier.
 /// @access public
 /// @param {String}	$key				Config key
 /// @param {Mixed}	$value	[false]		Config value
 /// @return {Mixed}
-@function _color ($original, $value: $_setter-placeholder) {
-	$key: '_color-library.' + _config('_color.' + $original);
-	$result: _config($key, $value);
-	@if $result == null and $value != $_setter-placeholder {
-		$key: '_color-library.' + $original;
-		$result: _config($key, $value);
+@function _scheme ($original, $value: $_setter-placeholder) {
+	$value: _config('_scheme.' + $original);
+	// Not a string, return the value
+	@if type-of($value) != string {
+		@return $value;
 	}
-	@return $result;
+
+	// It's a string, it's a reference to the library.
+    $key: '_color-library.' + _config('_scheme.' + $original);
+
+	// Get
+    $result: _config($key);
+
+	// Set
+    @if $result == null and $value != $_setter-placeholder {
+        $key: '_color-library.' + $original;
+        $result: _config($key, $value);
+    }
+
+    @return $result;
 }
