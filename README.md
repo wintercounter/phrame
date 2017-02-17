@@ -483,6 +483,28 @@ Shorthand function to get/set easing related values.
 }
 ```
 
+### Referencing keys
+
+Sometimes you might want to say like:
+"I want this text to have the same color always as the title."
+Well you can do that using an `@` sign.
+
+> When using references, you have to use full path.
+
+```scss
+$_: _config('subpage-scheme', (
+    'title': 'red.dark',
+    'this-text': '@subpage-scheme.title',
+    'other-text': '@whoknows.foo.bar'
+));
+```
+> This also helps to prevent to end up with such situations:
+```scss
+.not-app-title {
+    color: _scheme('app.background'); // Defined with the same color I needed
+}
+```
+
 ## Mixins
 
 ### `@mixin _triangle($size, $color, $direction)`
@@ -498,7 +520,7 @@ Creates a CSS triangle. Based on Zurb Foundation's solution.
     &::before {
         @include _triangle(
             12px,
-            'tooltip.bg',
+            'tooltip.bg', // or simply #000
             bottom
         );
     }
