@@ -42,7 +42,7 @@ Modular, configurable SASS framework mostly to be used with CSS modules.
 - [Modules](#modules)
   * [`basic`](#basic)
   * [`reset`](#reset)
-- [`expose`](#expose)
+  * [`expose`](#expose)
 - [Final words](#final-words)
 
 <!-- tocstop -->
