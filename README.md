@@ -692,7 +692,7 @@ A simple reset. You might not need this in case you already have
 your site built, or using some sort of framework, usually all
 framework are shipped with reset styles.
 
-# `expose`
+## `expose`
 This feature was usefull many times for us. It exposes your screen configuration (breakpoints)
 as JSON in your CSS on `body::before`. This will let you to have
 the same rules in JavaScript also, the rules are have to be maintained
