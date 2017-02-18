@@ -724,7 +724,7 @@ Oh yeah, I've almost forgot. The name is also taken on _npm_ :)
 ## Why no more modules (grid, form elements, etc.) and other shiny mixins?
 Because **Phrame**`2` is more like a shell than a framework - unlike the first version.
 Also there is no grid module because when I started to use `CSS modules` with `flexbox`,
-I've realized it's easier to just write my needs own my own.
+I've realized it's easier to just write my needs on my own.
 
 `float` and `inline-block` based grids are simple, it's easy to write a few classes, a generator around it.
 This is mostly because they all follow this rule: `( 12 || 16 || 24 ) + ( px || em || % )`
