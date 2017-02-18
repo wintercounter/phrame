@@ -526,8 +526,7 @@ Sometimes you might want to say like:
 "I want this text to have the same color always as the title."
 Well you can do that using an `@` sign.
 
-> When using references, you have to use full path.
-
+> When using references, **you have to use _full path_**.
 ```scss
 $_: _config('subpage-scheme', (
     'title': 'red.dark',
@@ -535,6 +534,7 @@ $_: _config('subpage-scheme', (
     'other-text': '@whoknows.foo.bar'
 ));
 ```
+
 > This also helps to prevent to end up with such situations:
 ```scss
 .not-app-title {
