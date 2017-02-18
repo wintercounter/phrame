@@ -535,6 +535,7 @@ $_: _config('subpage-scheme', (
 ));
 ```
 
+&nbsp;
 > This also helps to prevent to end up with such situations:
 ```scss
 .not-app-title {
