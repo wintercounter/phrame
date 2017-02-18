@@ -527,6 +527,7 @@ Sometimes you might want to say like:
 Well you can do that using an `@` sign.
 
 > When using references, **you have to use _full path_**.
+
 ```scss
 $_: _config('subpage-scheme', (
     'title': 'red.dark',
@@ -534,8 +535,6 @@ $_: _config('subpage-scheme', (
     'other-text': '@whoknows.foo.bar'
 ));
 ```
-
-#####&nbsp;
 > This also helps to prevent to end up with such situations:
 ```scss
 .not-app-title {
@@ -589,10 +588,6 @@ body {
 $_: _scheme('scrollbar', (
     'thumb-background': 'grey.main'
 ));
-
-.div {
-    @include _scrollbar;
-}
 
 // Direct value overwrite
 .div {
@@ -727,11 +722,13 @@ Scss explicitly without any footprint. So basically **Phrame**`2` is the shell o
 Oh yeah, I've almost forgot. The name is also taken on _npm_ :)
 
 ## Why no more modules (grid, form elements, etc.) and other shiny mixins?
-Because **Phrame**`2` more like a shell than a framework unlike the first version.
-Also there is no grid module because when I started to use CSS modules with flexbox,
-I've realized it's easier just to write my needs own my own.
+Because **Phrame**`2` is more like a shell than a framework - unlike the first version.
+Also there is no grid module because when I started to use `CSS modules` with `flexbox`,
+I've realized it's easier to just write my needs own my own.
 
 `float` and `inline-block` based grids are simple, it's easy to write a few classes, a generator around it.
+This is mostly because they all this rule: `( 12 || 16 || 24 ) + ( px || em || % )`
+
 But `flexbox` is flexible (oO). Every `flexbox` based grids out there are totally different.
 Simply because it is not designed for grids. __CSS grids__ are for grids, but until
 we have that in every modern browser, I'm totally satisfied with the bloat free stylesheet and
