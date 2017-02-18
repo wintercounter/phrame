@@ -516,7 +516,7 @@ Shorthand function to get/set easing related values.
 }
 
 .has-animation {
-    animation-timing: _easing('ease-in-out-expo');
+    animation-timing-function: _easing('ease-in-out-expo');
 }
 ```
 
