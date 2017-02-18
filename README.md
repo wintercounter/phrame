@@ -727,7 +727,7 @@ Also there is no grid module because when I started to use `CSS modules` with `f
 I've realized it's easier to just write my needs own my own.
 
 `float` and `inline-block` based grids are simple, it's easy to write a few classes, a generator around it.
-This is mostly because they all this rule: `( 12 || 16 || 24 ) + ( px || em || % )`
+This is mostly because they all follow this rule: `( 12 || 16 || 24 ) + ( px || em || % )`
 
 But `flexbox` is flexible (oO). Every `flexbox` based grids out there are totally different.
 Simply because it is not designed for grids. __CSS grids__ are for grids, but until
