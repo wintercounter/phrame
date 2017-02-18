@@ -731,8 +731,8 @@ This is mostly because they all follow this rule: `( 12 || 16 || 24 ) + ( px || 
 
 But `flexbox` is flexible (oO). Every `flexbox` based grids out there are totally different.
 Simply because it is not designed for grids. __CSS grids__ are for grids, but until
-we have that in every modern browser, I'm totally satisfied with the bloat free stylesheet and
-bloat-free markup I get. It looks ugly in _React_ components anyway.
+we have that in every modern browser, I'm fully satisfied with the bloat-free stylesheet and
+bloat-free markup I get. It looks ugly in _React_ components as well anyway.
 
 However, since modules are optional, maybe I'll consider to have more modules included
 (and/or port some from `1`), everyone can decide which one to use for his project.
