@@ -48,11 +48,12 @@
 
 	$keys: _str-explode($original, '.');
 	$keysNum: length($keys);
-	$pieces: ();
+	$pieces: map-merge((), ());
 	$tempConfig: $_config;
 	$result: null;
 	$nextPiece: null;
 
+	$pieceIndex: 1;
 	@each $key in $keys {
 
 		// No such key yet? Then create it
@@ -73,14 +74,20 @@
 		}
 
 		// Store pieces
-		$pieces: append($pieces, $tempConfig);
+		$pieces: map-merge($pieces, (
+			$pieceIndex: $tempConfig
+		));
+		$pieceIndex: $pieceIndex + 1;
 	}
 
 	// Prepend original config object
-	$pieces: join($_config, $pieces);
+	$pieces: map-merge($pieces, (
+		0: $_config
+	));
 
 	// Merge old and new values if both are a map
-	$old-value: nth($pieces, length($pieces));
+	$pieceKeys: map-keys($pieces);
+	$old-value: map-get($pieces, nth($pieceKeys, $pieceIndex - 1));
 	@if type-of($old-value) == map and type-of($value) == map {
 		$value: map-merge($old-value, $value);
 	}
@@ -88,8 +95,10 @@
 	$i: $keysNum;
 	@while $i > 0 {
 		$key: nth($keys, $i);
-		$piece: nth($pieces, $i);
+		$piece: map-get($pieces, nth($pieceKeys, $i));
 		$piece: if(type-of($piece) != map, map-merge((), ()), $piece);
+
+		//@warn $key, $piece, $original, $value;
 
 		@if $i == $keysNum {
 			$nextPiece: map-merge($piece, ($key: $value));
@@ -98,10 +107,11 @@
 		}
 
 		$result: $nextPiece;
+
 		$i: $i - 1;
 	}
 
-	$_config: $result !global;
+	$_config: map-merge($_config, $result) !global;
 
 	@return null;
 
