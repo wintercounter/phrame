@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DoclerLabs/phrame.git"
+    "url": "git+https://github.com/wintercounter/phrame.git"
   },
   "author": "Victor Vincent",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/DoclerLabs/phrame/issues"
+    "url": "https://github.com/wintercounter/phrame/issues"
   },
-  "homepage": "https://github.com/DoclerLabs/phrame#readme"
+  "homepage": "https://github.com/wintercounter/phrame#readme"
 }
