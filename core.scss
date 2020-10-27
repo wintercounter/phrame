@@ -1,8 +1,8 @@
 // Init some basic variables
-$_empty-map: map-merge((), ()) !global; // This will have type map, instead of list
-$_config: $_empty-map !global;
-$_config-key-cache: $_empty-map !global;
-$_setter-placeholder: 'it-is-a-getter' !global;
+$_empty-map: map-merge((), ()); // This will have type map, instead of list
+$_config: $_empty-map;
+$_config-key-cache: $_empty-map;
+$_setter-placeholder: 'it-is-a-getter';
 
 @import 'function/system';
 @import 'function/json';

@@ -38,7 +38,7 @@
 			@if $from != false and $to != false {
 				$screen: false;
 			}
-			@elseif $from != false and $to == false {
+			@else if $from != false and $to == false {
 				$screen: true;
 				$up-down: up;
 			}
@@ -47,7 +47,7 @@
 				$up-down: down;
 			}
 		}
-		@elseif $screen {
+		@else if $screen {
 			$screen: _screen('size' + '.' + $screen);
 			$from: map-get($screen, from);
 			$to: map-get($screen, to);
@@ -63,17 +63,17 @@
 				@content;
 			}
 		}
-		@elseif $screen and $up-down and $orientation {
+		@else if $screen and $up-down and $orientation {
 			@media only screen and (#{$width-type}: #{$to}px) and (orientation: #{$orientation}) {
 				@content;
 			}
 		}
-		@elseif $screen and $up-down and $orientation == false {
+		@else if $screen and $up-down and $orientation == false {
 			@media only screen and (#{$width-type}: #{$to}px) {
 				@content;
 			}
 		}
-		@elseif $screen == false and $up-down == false and $orientation != false {
+		@else if $screen == false and $up-down == false and $orientation != false {
 			@media only screen and (orientation: #{$orientation}) {
 				@content;
 			}
